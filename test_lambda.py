@@ -16,3 +16,16 @@ class Test(unittest.TestCase):
     def test_c_teardown_class(self):
         print('\r\nDeleting the lambda function...')
         main_utils.delete_lambda('lambda')
+
+    def test_d_secret_setup_class(self):
+        print('\r\nCreating the secret...')
+        main_utils.create_secret('senha', '123')
+
+    def test_e_get_secret_setup_class(self):
+        print('\r\ngetting the secret...')
+        value = main_utils.get_value('senha')
+        self.assertEqual(value['SecretString'], '123')
+
+    def test_f_delete_secret_setup_class(self):
+        print('\r\nDeleting the secret...')
+        main_utils.delete_secret('senha')

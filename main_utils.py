@@ -105,3 +105,48 @@ def invoke_function(function_name):
     except Exception as e:
         logger.exception('Error while invoking function')
         raise e
+
+def create_secret(name, secret_value):
+  """
+  Creates a secret in LocalStack.
+  """
+  try:
+    client_secret = get_boto3_client('secretsmanager')
+
+    kwargs = {'Name': name}
+    if isinstance(secret_value, str):
+        kwargs['SecretString'] = secret_value
+    elif isinstance(secret_value, bytes):
+        kwargs['SecretBinary'] = secret_value
+        
+    response = client_secret.create_secret(**kwargs)
+  except Exception as e:
+      logger.exception('Error while creating secret.')
+      raise e
+  return response
+
+def get_value(name):
+  """
+  Gets a secret in LocalStack.
+  """
+  try:
+    client_secret = get_boto3_client('secretsmanager')
+    kwargs = {'SecretId': name}
+    response = client_secret.get_secret_value(SecretId=name)
+  except Exception as e:
+      logger.exception('Error while get value from a secret.')
+      raise e
+  return response
+
+
+def delete_secret(name):
+  """
+  Gets a secret in LocalStack.
+  """
+  try:
+    client_secret = get_boto3_client('secretsmanager')
+    kwargs = {'SecretId': name}
+    response = client_secret.delete_secret(SecretId=name, ForceDeleteWithoutRecovery=True)
+  except Exception as e:
+      logger.exception('Error while delete secret.')
+      raise e
