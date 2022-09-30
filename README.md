@@ -69,3 +69,4 @@ put-targets --rule my-scheduled-rule \
 ## Links:
 - [Testing Python AWS applications using LocalStack](https://hands-on.cloud/testing-python-aws-applications-using-localstack/#h-working-with-lambda-in-python-using-localstack-boto3)
 - [https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html)
+- [SecretsManager in boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/secretsmanager.html#secretsmanager)
