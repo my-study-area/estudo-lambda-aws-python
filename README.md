@@ -16,6 +16,7 @@ aws --endpoint-url=http://localhost:4566 lambda list-functions --max-items 10
 ```
 
 ## Anotações
+### Lambdas
 Criando executando um lambda com AWS CLI:
 ```bash
 # cria role para lambda
@@ -66,7 +67,24 @@ aws --endpoint-url=http://localhost:4566 events \
 put-targets --rule my-scheduled-rule \
 --targets file://targets.json
 ```
-## Links:
+
+### Lambda containers
+```bash
+# entra no diretório
+cd lambda_container/app
+
+# cria a imagem
+docker build -t hello-lambda .
+
+# inicia o container com a lambda
+docker run -p 9000:8080 hello-lambda
+
+# envia requisições
+curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{}'
+```
+
+## Links
 - [Testing Python AWS applications using LocalStack](https://hands-on.cloud/testing-python-aws-applications-using-localstack/#h-working-with-lambda-in-python-using-localstack-boto3)
 - [https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html)
 - [SecretsManager in boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/secretsmanager.html#secretsmanager)
+- [Creating Lambda container images](https://docs.aws.amazon.com/lambda/latest/dg/images-create.html)
