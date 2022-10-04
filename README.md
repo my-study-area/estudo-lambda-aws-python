@@ -88,3 +88,4 @@ curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d
 - [https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-awscli.html)
 - [SecretsManager in boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/secretsmanager.html#secretsmanager)
 - [Creating Lambda container images](https://docs.aws.amazon.com/lambda/latest/dg/images-create.html)
+- [Deploy Python Lambda functions with .zip file archives](https://docs.aws.amazon.com/lambda/latest/dg/python-package.html)
