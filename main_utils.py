@@ -4,6 +4,7 @@ import json
 from zipfile import ZipFile
 
 import boto3
+from botocore.exceptions import ClientError
 
 AWS_REGION = os.environ.get('AWS_REGION', 'us-east-1')
 AWS_PROFILE = os.environ.get('AWS_PROFILE', 'localstack')
@@ -32,6 +33,21 @@ def get_boto3_client(service):
         raise e
     else:
         return lambda_client
+
+def get_boto3_resource(service):
+    """
+    Initialize Boto3 Resource.
+    """
+    try:
+        boto3_resource = boto3.resource(
+            service,
+            endpoint_url=ENDPOINT_URL
+        )
+    except Exception as e:
+        logger.exception('Error while connecting to LocalStack.')
+        raise e
+    else:
+        return boto3_resource
 
 
 def create_lambda_zip(function_name):
@@ -150,3 +166,25 @@ def delete_secret(name):
   except Exception as e:
       logger.exception('Error while delete secret.')
       raise e
+
+def create_bucket(bucket_name, region = None):
+  """
+  Create bucket
+  """
+  client_s3 = get_boto3_client('s3')
+  try:
+    client_s3.create_bucket(Bucket=bucket_name)
+  except ClientError as e:
+      logging.error(e)
+      return False
+  return True
+
+def list_buckets():
+  client_s3 = get_boto3_client('s3')
+  return client_s3.list_buckets()
+
+def delete_bucket_with_objects(bucket_name):
+  s3_resource = get_boto3_resource('s3')
+  bucket = s3_resource.Bucket(bucket_name)
+  bucket.objects.delete()
+  bucket.delete()
